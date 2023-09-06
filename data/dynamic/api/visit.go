@@ -8,7 +8,9 @@ import (
 	"net/http"
 )
 
-const htmlPath = "./../../statistic/visit.html"
+const (
+	html = "visit.html"
+)
 
 func InitRouters() {
 	r := gin.Default()
@@ -18,7 +20,7 @@ func InitRouters() {
 }
 
 func Visit(c *gin.Context) {
-	c.HTML(http.StatusOK, htmlPath, gin.H{})
+	c.File("./visit.html")
 }
 
 func GetIp(c *gin.Context) {
@@ -28,7 +30,7 @@ func GetIp(c *gin.Context) {
 	if err != nil {
 		hlog.Error("get ip_info failed,", err)
 	}
-	hlog.Infof("query feed from country:%s,region:%s,city:%s", results.Country_long, results.Region, results.City)
+	hlog.Infof("country:%s,region:%s,city:%s", results.Country_long, results.Region, results.City)
 	c.JSON(http.StatusOK, IP{
 		Country: results.Country_long,
 		Region:  results.Region,

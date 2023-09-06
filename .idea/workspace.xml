@@ -5,29 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4cc5fe08-eddf-46a2-a985-7fc20f806f23" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/ChatGPTCopilotChannelManager.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/ELKDATA.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/thriftCompiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/dynamic/IP2LOCATION-LITE-DB11.BIN" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/dynamic/initialize/ip.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/dynamic/log/logger.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/dynamic/middleware/cors.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/dynamic/middleware/request_time.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/statistc/Occupancy_Estimation.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/statistc/logstash.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistic/visit.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/2023-09-06.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dynamic/IP2LOCATION-LITE-DB11.BIN" beforeDir="false" afterPath="$PROJECT_DIR$/IP2LOCATION-LITE-DB11.BIN" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/dynamic/api/visit.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/api/visit.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/dynamic/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistic/visit,.js" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/logstash.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistic/visit.css" beforeDir="false" afterPath="$PROJECT_DIR$/statistic/visit.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistic/visit.html" beforeDir="false" afterPath="$PROJECT_DIR$/statistic/visit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dynamic/initialize/ip.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/initialize/ip.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dynamic/log/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/initialize/logger.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/statistc/Occupancy_Estimation.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/statistic/Occupancy_Estimation.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/statistc/logstash.conf" beforeDir="false" afterPath="$PROJECT_DIR$/data/statistic/logstash.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistic/visit.html" beforeDir="false" afterPath="$PROJECT_DIR$/visit.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,33 +44,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "E:/我的菜鸡项目实战/GoByGo",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/我的菜鸡项目实战/GoByGo&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\我的菜鸡项目实战\ELKDATA\data\statistc" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\我的菜鸡项目实战\ELKDATA" />
+      <recent name="E:\我的菜鸡项目实战\ELKDATA\statistic" />
       <recent name="E:\我的菜鸡项目实战\ELKDATA\data\dynamic\initialize" />
       <recent name="E:\我的菜鸡项目实战\ELKDATA\data\dynamic" />
       <recent name="E:\我的菜鸡项目实战\ELKDATA\data\statistc" />
@@ -98,6 +88,14 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="ELKDATA" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/data/dynamic/cmd/main.go" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
       <module name="ELKDATA" />
       <working_directory value="$PROJECT_DIR$" />
@@ -108,6 +106,11 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go 构建.go build main.go" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">

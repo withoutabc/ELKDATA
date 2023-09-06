@@ -1,0 +1,5 @@
+{"level":"fatal","msg":"initialize ipDb failedopen ./../IP2LOCATION-LITE-DB11.BIN: The system cannot find the file specified.","time":"2023-09-06T23:57:10+08:00"}
+{"level":"fatal","msg":"initialize ipDb failedopen ./../IP2LOCATION-LITE-DB11.BIN: The system cannot find the file specified.","time":"2023-09-06T23:57:47+08:00"}
+{"level":"fatal","msg":"initialize ipDb failedopen ./../IP2LOCATION-LITE-DB11.BIN: The system cannot find the file specified.","time":"2023-09-06T23:58:13+08:00"}
+{"level":"info","msg":"query feed from country:-,region:-,city:-","time":"2023-09-06T23:59:13+08:00"}
+{"level":"info","msg":"query feed from country:-,region:-,city:-","time":"2023-09-07T00:00:00+08:00"}
