@@ -5,16 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4cc5fe08-eddf-46a2-a985-7fc20f806f23" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistic/visit,.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistic/visit.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistic/visit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/ChatGPTCopilotChannelManager.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/ELKDATA.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/thriftCompiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dynamic/IP2LOCATION-LITE-DB11.BIN" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dynamic/initialize/ip.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dynamic/log/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dynamic/middleware/cors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dynamic/middleware/request_time.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/statistc/Occupancy_Estimation.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/statistc/logstash.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistic/visit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dynamic/api/visit.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/api/visit.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dynamic/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/cmd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistic/visit,.js" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/logstash.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistic/visit.css" beforeDir="false" afterPath="$PROJECT_DIR$/statistic/visit.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistic/visit.html" beforeDir="false" afterPath="$PROJECT_DIR$/statistic/visit.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file://C:/Program Files/Go" />
   <component name="Git.Settings">
@@ -34,18 +59,35 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultGoTemplateProperty": "Go File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "C:/Users/杨璟轩"
+    "last_opened_file_path": "E:/我的菜鸡项目实战/GoByGo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\我的菜鸡项目实战\ELKDATA\data\statistc" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\我的菜鸡项目实战\ELKDATA\data\dynamic\initialize" />
+      <recent name="E:\我的菜鸡项目实战\ELKDATA\data\dynamic" />
+      <recent name="E:\我的菜鸡项目实战\ELKDATA\data\statistc" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="ELKDATA" />
