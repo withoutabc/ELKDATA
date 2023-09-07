@@ -8,16 +8,31 @@
 <div class="container">
     <h1>欢迎访问😊</h1>
     <p>您的登陆国家为<span id="country"></span>，登录省份为<span id="province"></span>，登录城市为<span id="city"></span>。</p>
-    <p>请求响应时间为<span id="responseTime"></span>。</p>
 </div>
+<button onclick="sendSlowRequest()">慢请求</button>
 </body>
 </html>
 
 <script>
-    document.getElementById("country").textContent = "中国";
-    document.getElementById("province").textContent = "广东省";
-    document.getElementById("city").textContent = "深圳市";
-    document.getElementById("responseTime").textContent = "100ms";
+    function getIpInfo() {
+        fetch('http://127.0.0.1:5888/ip')
+            .then(response => response.json())
+            .then(data => {
+                console.log('IP信息:', data);
+                // 将获取的IP信息对应到HTML元素
+                document.getElementById('country').textContent = data.Country;
+                document.getElementById('province').textContent = data.Region;
+                document.getElementById('city').textContent = data.City;
+            })
+            .catch(error => {
+                console.error('获取IP信息失败:', error);
+            });
+    }
+    function sendSlowRequest() {
+        window.open('http://127.0.0.1:5888/slow');
+    }
+    // 在需要调用的地方调用getIpInfo()函数
+    getIpInfo();
 </script>
 
 <style>
@@ -49,5 +64,9 @@
         color: #666;
         font-size: 18px;
         margin-bottom: 10px;
+    }
+
+    button {
+        margin-top: 20px;
     }
 </style>

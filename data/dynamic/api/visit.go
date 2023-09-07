@@ -2,25 +2,51 @@ package api
 
 import (
 	"ELKDATA/data/dynamic/initialize"
-	"ELKDATA/data/dynamic/middleware"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"os"
+	"path"
+	"time"
 )
 
 const (
-	html = "visit.html"
+	VisitHtml = "./html/visit.html"
+	SlowHtml  = "./html/slow.html"
 )
 
 func InitRouters() {
 	r := gin.Default()
-	r.GET("/visit", middleware.ReqTimeInfo(), Visit)
+	logFilePath := "./tmp/"
+	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
+		panic(err)
+	}
+
+	// Set filename to date
+	logFileName := time.Now().Format("2006-01-02") + ".log"
+	fileName := path.Join(logFilePath, logFileName)
+	if _, err := os.Stat(fileName); err != nil {
+		if _, err := os.Create(fileName); err != nil {
+			panic(err)
+		}
+	}
+	f, _ := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, 0644)
+	r.Use(gin.LoggerWithWriter(f))
+
+	r.GET("/visit", Visit)
 	r.GET("/ip", GetIp)
+
+	r.GET("/slow", Slow)
 	r.Run(":5888")
 }
 
+func Slow(c *gin.Context) {
+	time.Sleep(time.Millisecond * 500)
+	c.File(SlowHtml)
+}
+
 func Visit(c *gin.Context) {
-	c.File("./visit.html")
+	c.File(VisitHtml)
 }
 
 func GetIp(c *gin.Context) {

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="CN">
+<head>
+    <meta charset="UTF-8">
+    <title>登录界面</title>
+</head>
+<body>
+<div class="container">
+    <h1>欢迎访问😊</h1>
+    <p>您的登陆国家为<span id="country"></span>，登录省份为<span id="province"></span>，登录城市为<span id="city"></span>。</p>
+    <p style="color: red; background-color: white; padding: 10px;">本次请求为慢请求</p>
+</div>
+<button onclick="sendSlowRequest()">慢请求</button>
+</body>
+</html>
+
+<script>
+    function getIpInfo() {
+        fetch('http://127.0.0.1:5888/ip')
+            .then(response => response.json())
+            .then(data => {
+                console.log('IP信息:', data);
+                // 将获取的IP信息对应到HTML元素
+                document.getElementById('country').textContent = data.Country;
+                document.getElementById('province').textContent = data.Region;
+                document.getElementById('city').textContent = data.City;
+            })
+            .catch(error => {
+                console.error('获取IP信息失败:', error);
+            });
+    }
+    function sendSlowRequest() {
+        fetch('http://127.0.0.1:5888/slow')
+            .then(response => response.text())
+            .then(data => {
+                console.log('慢请求成功:', data);
+            })
+            .catch(error => {
+                console.error('慢请求失败:', error);
+            });
+    }
+    // 在需要调用的地方调用getIpInfo()函数
+    getIpInfo();
+</script>
+
+<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding-top: 150px;
+    }
+
+    .container {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 0 auto;
+        width: 400px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        font-family: Arial, sans-serif;
+        color: #333;
+        font-size: 24px;
+        margin: 20px;
+        padding: 10px;
+    }
+
+    p {
+        color: #666;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        margin-top: 20px;
+    }
+</style>

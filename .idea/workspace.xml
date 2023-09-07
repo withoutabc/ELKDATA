@@ -5,17 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4cc5fe08-eddf-46a2-a985-7fc20f806f23" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/2023-09-06.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/html/slow.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/html/visit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dynamic/IP2LOCATION-LITE-DB11.BIN" beforeDir="false" afterPath="$PROJECT_DIR$/IP2LOCATION-LITE-DB11.BIN" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/dynamic/api/visit.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/api/visit.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dynamic/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dynamic/initialize/ip.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/initialize/ip.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dynamic/log/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/dynamic/initialize/logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/statistc/Occupancy_Estimation.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/statistic/Occupancy_Estimation.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/statistc/logstash.conf" beforeDir="false" afterPath="$PROJECT_DIR$/data/statistic/logstash.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistic/visit.html" beforeDir="false" afterPath="$PROJECT_DIR$/visit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dynamic/middleware/cors.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dynamic/middleware/request_time.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/visit.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,11 +67,11 @@
       <recent name="E:\我的菜鸡项目实战\ELKDATA\data\statistc" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\我的菜鸡项目实战\ELKDATA\html" />
       <recent name="E:\我的菜鸡项目实战\ELKDATA" />
       <recent name="E:\我的菜鸡项目实战\ELKDATA\statistic" />
       <recent name="E:\我的菜鸡项目实战\ELKDATA\data\dynamic\initialize" />
       <recent name="E:\我的菜鸡项目实战\ELKDATA\data\dynamic" />
-      <recent name="E:\我的菜鸡项目实战\ELKDATA\data\statistc" />
     </key>
   </component>
   <component name="RunManager">
@@ -118,6 +114,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="前端静态，接口调通" />
+    <option name="LAST_COMMIT_MESSAGE" value="前端静态，接口调通" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
