@@ -1,6 +1,6 @@
 # 基于ELK框架的静态/动态数据可视化系统
 
-本项目所展示的可视化图表均已**额外**保存于`ELKDATA/docs/statistic`和`ELKDATA/docs/dynamic`目录下。
+本项目所展示的可视化图表均已**额外**保存于`ELKDATA/docs/dashboard`目录下。
 
 ## ELK介绍
 
