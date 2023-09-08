@@ -1,6 +1,6 @@
 # 基于ELK框架的静态/动态数据可视化系统
 
-本项目所展示的可视化图表均已**额外**保存于`ELKDATA/docs`目录下。
+本项目所展示的可视化图表均已**额外**保存于`ELKDATA/docs/statistic`和`ELKDATA/docs/dynamic`目录下。
 
 ## ELK介绍
 
@@ -33,9 +33,9 @@ Kibana是一个针对Elasticsearch的开源分析及可视化平台，用来搜�
 
 #### 数据源
 
-- 可靠性：从https://archive.ics.uci.edu网站中下载的`csv`格式数据，名称为`Room Occupancy Estimation`。
-- 复杂性：**1w+**行数据。![)RB(`4${SDZ((_B4RHU_ZS7.png](https://s2.loli.net/2023/09/08/3vKNBq7y5lPLcAo.png)
-- 多样性：每行数据包含18个字段。![_6_H63_Q_N_FRW4D__0MBD3.png](https://s2.loli.net/2023/09/08/YKTJfIAeRH8zg92.png)
+- 可靠性：从 https://archive.ics.uci.edu 网站中下载的`csv`格式数据，名称为`Room Occupancy Estimation`。
+- 复杂性：**1w+**行数据。![](./docs/images/datasource1.png)
+- 多样性：每行数据包含18个字段。![](./docs/images/data2.png)
 
 （数据源文件在项目`ELKDATA/data/statistic`目录下）
 
@@ -100,11 +100,11 @@ networks:
 
 访问5601端口，进入web界面，导入数据
 
-![YJL_6XA8SYCR__QMI291B_0.png](https://s2.loli.net/2023/09/08/Og5x9BrvNRJLoI8.png)
+![](./docs/images/dis1.png)
 
 `Discover`界面如图所示。这也是**基于时间戳的柱形图**。
 
-![38X35I_WI_O9_57E9`K_T_M.png](https://s2.loli.net/2023/09/08/FPn7NyoK1p5zGgW.png)
+![](./docs/images/dis2.png)
 
 #### 图表绘制与展示
 
