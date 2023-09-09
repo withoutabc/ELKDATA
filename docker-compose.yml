@@ -1,5 +1,12 @@
 version: "2"
 services:
+  elk_data:
+    image: withoutabc/elk_data:5.0
+    ports:
+      - "5888:5888"
+    volumes:
+      - ./log:/app/tmp
+
   elasticsearch:
     image: elasticsearch:7.13.1
     container_name: elasticsearch

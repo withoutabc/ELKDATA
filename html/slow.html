@@ -15,22 +15,25 @@
 </html>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        getIpInfo();
+    });
     function getIpInfo() {
-        fetch('http://127.0.0.1:5888/ip')
+        fetch('http://49.7.114.49:5888/ip')
             .then(response => response.json())
             .then(data => {
                 console.log('IP信息:', data);
                 // 将获取的IP信息对应到HTML元素
-                document.getElementById('country').textContent = data.Country;
-                document.getElementById('province').textContent = data.Region;
-                document.getElementById('city').textContent = data.City;
+                document.getElementById('country').textContent = data.country;
+                document.getElementById('province').textContent = data.region;
+                document.getElementById('city').textContent = data.city;
             })
             .catch(error => {
                 console.error('获取IP信息失败:', error);
             });
     }
     function sendSlowRequest() {
-        fetch('http://127.0.0.1:5888/slow')
+        fetch('http://49.7.114.49:5888/slow')
             .then(response => response.text())
             .then(data => {
                 console.log('慢请求成功:', data);
@@ -39,8 +42,6 @@
                 console.error('慢请求失败:', error);
             });
     }
-    // 在需要调用的地方调用getIpInfo()函数
-    getIpInfo();
 </script>
 
 <style>
