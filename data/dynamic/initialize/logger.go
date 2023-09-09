@@ -1,7 +1,9 @@
 package initialize
 
 import (
+	"fmt"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/gin-gonic/gin"
 	hertzlogrus "github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"os"
@@ -42,7 +44,20 @@ func InitLogger() {
 
 	logger.SetOutput(lumberjackLogger)
 
-	logger.SetLevel(hlog.LevelInfo)
+	logger.SetLevel(hlog.LevelDebug)
 
 	hlog.SetLogger(logger)
+}
+
+func LoggerWithFormatter(params gin.LogFormatterParams) string {
+
+	return fmt.Sprintf(
+		"timestamp:%s,status_code:%d,client_ip:%s,latency:%s,method:%s,path:%s\n",
+		params.TimeStamp.Format("2006-01-02 15:04:05"),
+		params.StatusCode, // 状态码
+		params.ClientIP,   // 客户端ip
+		params.Latency,    // 请求耗时
+		params.Method,     // 请求方法
+		params.Path,       // 路径
+	)
 }

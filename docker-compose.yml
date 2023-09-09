@@ -1,7 +1,7 @@
 version: "2"
 services:
   elk_data:
-    image: withoutabc/elk_data:5.0
+    image: withoutabc/elk_data:6.1
     ports:
       - "5888:5888"
     volumes:

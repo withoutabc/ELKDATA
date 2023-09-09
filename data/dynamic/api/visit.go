@@ -4,6 +4,7 @@ import (
 	"ELKDATA/data/dynamic/initialize"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/gin-gonic/gin"
+	"io"
 	"net/http"
 	"os"
 	"path"
@@ -31,7 +32,8 @@ func InitRouters() {
 		}
 	}
 	f, _ := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, 0644)
-	r.Use(gin.LoggerWithWriter(f))
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+	r.Use(gin.LoggerWithFormatter(initialize.LoggerWithFormatter))
 
 	r.GET("/visit", Visit)
 	r.GET("/ip", GetIp)
@@ -55,6 +57,9 @@ func GetIp(c *gin.Context) {
 	results, err := ipdb.Get_all(ip)
 	if err != nil {
 		hlog.Error("get ip_info failed,", err)
+	}
+	if results.Region == "Hong Kong" || results.Region == "Tai Wan" || results.Region == "Macao" || results.Region == "Taiwan" {
+		results.Country_long = "China"
 	}
 	hlog.Infof("country:%s,region:%s,city:%s", results.Country_long, results.Region, results.City)
 	c.JSON(http.StatusOK, IP{
