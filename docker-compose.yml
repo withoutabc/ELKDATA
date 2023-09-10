@@ -1,11 +1,40 @@
 version: "2"
 services:
+  mysql:
+    image: mysql:latest
+    container_name: elk_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 224488
+      MYSQL_DATABASE: movie
+    ports:
+      - "13307:3306"
+    volumes:
+      - "./mysql_data:/var/lib/mysql"
+      - "./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql"
+    networks:
+      - elk
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: elk_phpadmin
+    ports:
+      - "3300:80"
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: elk_mysql
+      PMA_USER: root
+      PMA_PASSWORD: 224488
+    networks:
+      - elk
+
   elk_data:
-    image: withoutabc/elk_data:6.1
+    image: withoutabc/elk_data:6.3
     ports:
       - "5888:5888"
     volumes:
       - ./log:/app/tmp
+    networks:
+      - elk
 
   elasticsearch:
     image: elasticsearch:7.13.1
@@ -37,6 +66,8 @@ services:
       - "5601:5601"
     volumes:
       - "./kibana_data:/bitnami/kibana"
+      - "./elk_data/log/:/home/withoutabc/elk/elk_data/log/"
+      - "./jdbc_driver/mysql-connector-java-8.0.26.jar:/jdbc_driver/mysql-connector-java-8.0.26.jar"
     depends_on:
       - elasticsearch
     networks:

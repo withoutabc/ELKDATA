@@ -8,6 +8,6 @@ COPY ./html/visit.html ./html/slow.html ./html/
 
 EXPOSE 5888
 
-ENV TZ=Asia/Shanghai
+RUN apk update && apk add tzdata
 
 CMD ["./main"]

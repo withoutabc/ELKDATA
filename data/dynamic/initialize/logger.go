@@ -15,6 +15,17 @@ const (
 	LogFilePath = "./tmp/"
 )
 
+var Loc *time.Location
+
+func InitShanghaiTime() {
+	loc, err := time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		fmt.Println("Error loading location:", err)
+		return
+	}
+	Loc = loc
+}
+
 // InitLogger to init logrus
 func InitLogger() {
 	// Customizable output directory.
@@ -24,7 +35,7 @@ func InitLogger() {
 	}
 
 	// Set filename to date
-	logFileName := time.Now().Format("2006-01-02") + ".log"
+	logFileName := time.Now().In(Loc).Format("2006-01-02") + ".log"
 	fileName := path.Join(logFilePath, logFileName)
 	if _, err := os.Stat(fileName); err != nil {
 		if _, err := os.Create(fileName); err != nil {
@@ -53,7 +64,7 @@ func LoggerWithFormatter(params gin.LogFormatterParams) string {
 
 	return fmt.Sprintf(
 		"timestamp:%s,status_code:%d,client_ip:%s,latency:%s,method:%s,path:%s\n",
-		params.TimeStamp.Format("2006-01-02 15:04:05"),
+		time.Now().In(Loc).Format("2006-01-02 15:04:05"),
 		params.StatusCode, // 状态码
 		params.ClientIP,   // 客户端ip
 		params.Latency,    // 请求耗时
