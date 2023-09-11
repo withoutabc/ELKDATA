@@ -1,6 +1,8 @@
 USE movie;
 
 CREATE TABLE movie_ratings (
+
+     movie_ratings_id INT AUTO_INCREMENT PRIMARY KEY,
       user_id INT,
        movie_id INT,
        rating DECIMAL(3, 2),
