@@ -3,7 +3,7 @@ FROM alpine:latest
 WORKDIR /app
 
 COPY ./data/dynamic/cmd/main .
-COPY ./front_end/visit.html ./front_end/slow.html ./front_end/visit.css ./front_end/visit.js ./html/
+COPY ./front_end/visit.html ./front_end/slow.html ./front_end/visit.css ./front_end/visit.js ./front_end/
 
 EXPOSE 5888
 
