@@ -6,17 +6,19 @@ import (
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/hertz/pkg/common/json"
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path"
+	"strings"
 	"time"
 )
 
 const (
-	VisitHtml = "./html/visit.html"
-	SlowHtml  = "./html/slow.html"
+	VisitHtml = "./front_end/visit.html"
+	SlowHtml  = "./front_end/slow.html"
 )
 
 func InitRouters() {
@@ -37,6 +39,14 @@ func InitRouters() {
 	f, _ := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, 0644)
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	r.Use(gin.LoggerWithFormatter(initialize.LoggerWithFormatter))
+
+	r.SetFuncMap(template.FuncMap{
+		"upper": strings.ToUpper,
+	})
+	r.Static("/front_end", "./front_end")
+	r.LoadHTMLGlob("front_end/*.html")
+
+	r.GET("/", Visit)
 	r.GET("/visit", Visit)
 	r.GET("/ip", GetIp)
 
@@ -50,7 +60,9 @@ func Slow(c *gin.Context) {
 }
 
 func Visit(c *gin.Context) {
-	c.File(VisitHtml)
+	c.HTML(http.StatusOK, "visit.html", gin.H{
+		"content": "This is a visit page",
+	})
 }
 
 func GetIp(c *gin.Context) {
