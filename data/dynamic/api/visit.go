@@ -11,7 +11,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"path"
 	"strings"
 	"time"
 )
@@ -23,21 +22,9 @@ const (
 
 func InitRouters() {
 	r := gin.Default()
-	logFilePath := "./tmp/"
-	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
-		panic(err)
-	}
-
-	// Set filename to date
-	logFileName := time.Now().Format("2006-01-02") + ".log"
-	fileName := path.Join(logFilePath, logFileName)
-	if _, err := os.Stat(fileName); err != nil {
-		if _, err := os.Create(fileName); err != nil {
-			panic(err)
-		}
-	}
-	f, _ := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, 0644)
+	f := initialize.InitGINLogger()
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+
 	r.Use(gin.LoggerWithFormatter(initialize.LoggerWithFormatter))
 
 	r.SetFuncMap(template.FuncMap{
@@ -46,11 +33,12 @@ func InitRouters() {
 	r.Static("/front_end", "./front_end")
 	r.LoadHTMLGlob("front_end/*.html")
 
-	r.GET("/", Visit)
-	r.GET("/visit", Visit)
-	r.GET("/ip", GetIp)
+	{
+		r.GET("/visit", Visit)
+		r.GET("/ip", GetIp)
+		r.GET("/slow", Slow)
+	}
 
-	r.GET("/slow", Slow)
 	r.Run(":5888")
 }
 

@@ -7,6 +7,6 @@ import (
 
 func main() {
 	initialize.InitShanghaiTime()
-	initialize.InitLogger()
+	initialize.InitHLogger()
 	api.InitRouters()
 }

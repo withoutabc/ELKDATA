@@ -26,8 +26,7 @@ func InitShanghaiTime() {
 	Loc = loc
 }
 
-// InitLogger to init logrus
-func InitLogger() {
+func InitHLogger() {
 	// Customizable output directory.
 	logFilePath := LogFilePath
 	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
@@ -61,7 +60,6 @@ func InitLogger() {
 }
 
 func LoggerWithFormatter(params gin.LogFormatterParams) string {
-
 	return fmt.Sprintf(
 		"timestamp:%s,status_code:%d,client_ip:%s,latency:%s,method:%s,path:%s\n",
 		time.Now().In(Loc).Format("2006-01-02 15:04:05"),
@@ -71,4 +69,22 @@ func LoggerWithFormatter(params gin.LogFormatterParams) string {
 		params.Method,     // 请求方法
 		params.Path,       // 路径
 	)
+}
+
+func InitGINLogger() *os.File {
+	logFilePath := "./tmp/"
+	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
+		panic(err)
+	}
+
+	// Set filename to date
+	logFileName := time.Now().Format("2006-01-02") + ".log"
+	fileName := path.Join(logFilePath, logFileName)
+	if _, err := os.Stat(fileName); err != nil {
+		if _, err := os.Create(fileName); err != nil {
+			panic(err)
+		}
+	}
+	f, _ := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, 0644)
+	return f
 }
