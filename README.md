@@ -45,7 +45,7 @@ Kibana是一个针对Elasticsearch的开源分析及可视化平台，用来搜�
 
 实验中使用了五种不同类型的非侵入式传感器:**温度、光、声、CO2和数字被动红外(PIR)**。二氧化碳、声音和PIR传感器需要人工校准。对于二氧化碳传感器，在首次使用之前，通过将其保持在清洁环境中超过20分钟，然后将校准引脚(HD引脚)拉低超过7秒，手动进行零点校准。声音传感器本质上是一个带有可变增益模拟放大器的麦克风。因此，该传感器的输出是由微控制器的ADC以伏特为单位读取的模拟量。调整与放大器增益相连的电位器以确保最高灵敏度。PIR传感器有两个微调器:一个用于调整灵敏度，另一个用于调整检测运动后输出保持高电平的时间。这两个都被调整到最高值。**传感器节点S1-S4由温度、光和声音传感器组成，S5有一个二氧化碳传感器，S6和S7有一个PIR传感器**，每个传感器以一定角度部署在天花板架上，以最大化传感器的运动检测视野。
 
-数据**以一种受控的方式收集了4天，房间的占用率在0到3人之间变化。**房间里入住人数的真实情况是手工记录的。
+数据**以一种受控的方式收集了4天，房间的占用率在0到3人之间变化**。房间里入住人数的真实情况是手工记录的。
 
 #### 部署
 
@@ -106,7 +106,7 @@ networks:
 
 ![](./docs/images/dis2.png)
 
-#### 图表绘制与展示
+#### 数据可视化
 
 当然，`Kibana`所提供的`Dashboard`才是数据可视化的精髓。接下来我将从不同维度绘制图表并做说明。
 
@@ -122,9 +122,11 @@ networks:
 | :------: | :---------------------------: | :------------------------------: |
 | `/visit` |          进入web界面          |    请求此接口后自动请求`/ip`     |
 |  `/ip`   |      获取登录主机的地址       | 有时请求信息速度较慢，请耐心等待 |
-| `/slow`  | 模拟耗时较长的业务，睡500毫秒 |   点击/visit界面的按钮即可访问   |
+| `/slow`  | 模拟耗时较长的业务，睡500毫秒 |  点击`/visit`界面的按钮即可访问  |
 
-我已用Docker将代码打包成镜像部署在服务器上，评委若感兴趣可以访问：http://49.7.114.49:5888/visit，您的访问**将会以日志形式记录，并被ELK框架读取分析**。
+我已用Docker将代码打包成镜像部署在服务器上，评委若感兴趣可以访问：http://49.7.114.49:5888/visit 
+
+您的访问**将会以日志形式记录，并被ELK框架读取分析**。
 
 换句话说，**这里的数据来自对接口的访问**。
 
@@ -138,7 +140,7 @@ networks:
    {"level":"error","msg":"请求失败:Get \"http://ip-api.com/json/125.86.165.54?fields=61439\u0026lang=zh-CN\": read tcp 192.168.128.2:40052-\u003e208.95.112.1:80: read: connection timed out","time":"2023-09-12T18:41:40+08:00"}
    ```
 
-2. `level`+`msg`+`time`，`msg`含有`country`+`region`+city+`latitude`+`longitude`：记录客户端地址。
+2. `level`+`msg`+`time`，`msg`含有`country`+`region`+`city`+`latitude`+`longitude`：记录客户端地址。
 
    ```log
    {"level":"info","msg":"country:中国,region:河南,city:郑州市,latitude:34.747200,longitude:113.625000","time":"2023-09-15T22:13:27+08:00"}
@@ -153,9 +155,145 @@ networks:
 
 - 以上字段信息的获取都借助了一些框架或API接口，这里不赘述。
 
-##### 部署
+##### 数据收集
 
-##### 数据导入
+基于之前的静态数据可视化（`elasticsearch`+`kibana`），现在额外部署`logstash`，用于不断将日志信息收集处理并发送至`elasticsearch`中。
+
+```yml
+# docker-compose.yml中添加  
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.13.1
+    container_name: logstash
+    volumes:
+      - "./logstash.conf:/usr/share/logstash/pipeline/logstash.conf"
+      - "./elk_data/log/:/home/withoutabc/elk/elk_data/log/"
+      - "./jdbc_driver/mysql-connector-java-8.0.26.jar:/jdbc_driver/mysql-connector-java-8.0.26.jar"
+    environment:
+      - "XPACK_MONITORING_ENABLED=false"
+      - TZ=Asia/Shanghai
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk
+```
+
+其中，`"./logstash.conf:/usr/share/logstash/pipeline/logstash.conf"`用于将宿主机上的`logstash`配置文件挂载到容器中。
+
+```ruby
+# logstash.conf
+input {
+  file {
+    path => "/home/withoutabc/elk/elk_data/log/*.log"
+    start_position => "beginning"
+    sincedb_path => "/dev/null"
+    tags => ["file"]
+  }
+}
+
+filter {
+  if "client_ip" in [message] {
+    grok {
+      match => { "message" => "timestamp:%{TIMESTAMP_ISO8601:timestamp},status_code:%{NUMBER:status_code},client_ip:%{IP:client_ip},latency:%{NUMBER:latency_value}%{DATA:latency_unit},method:%{WORD:method},path:%{URIPATH:url_path}" }
+    }
+    date {
+        match => [ "timestamp", "yyyy-MM-dd HH:mm:ss" ]
+        target => "@timestamp"
+    }
+    mutate {
+      add_field => {
+        "index_name" => "visit"
+      }
+    }
+  } else if "country" in [message] {
+    grok {
+    match => { "message" => "{\"level\":\"%{WORD:level}\",\"msg\":\"country:%{DATA:country},region:%{DATA:region},city:%{DATA:city},latitude:%{NUMBER:latitude},longitude:%{NUMBER:longitude}\",\"time\":\"%{TIMESTAMP_ISO8601:timestamp}\"}" }
+
+    }
+    date {
+        match => [ "timestamp", "yyyy-MM-dd'T'HH:mm:ssZ" ]
+        target => "@timestamp"
+    }
+    mutate {
+      add_field => {
+        "index_name" => "ip"
+      }
+    }
+    mutate {
+    convert => {
+      "latitude" => "float"
+      "longitude" => "float"
+    }
+  }
+
+    mutate {
+    add_field => {
+      "location" => "%{[latitude]},%{[longitude]}"
+    }
+  }
+  } else if "level" in [message] and "country" not in [message] {
+    grok {
+        match => { "message" => "{\"level\":\"%{WORD:level}\",\"msg\":\"%{GREEDYDATA:msg}\",\"time\":\"%{TIMESTAMP_ISO8601:timestamp}\"}" }
+
+        }
+        date {
+            match => [ "timestamp", "yyyy-MM-dd'T'HH:mm:ssZ" ]
+            target => "@timestamp"
+        }
+        mutate {
+          add_field => {
+            "index_name" => "log"
+          }
+        }
+  } else {
+    drop {}
+  }
+}
+
+output {
+    if "file" in [tags] {
+      elasticsearch {
+          hosts => ["elasticsearch:9200"]
+          index => "%{index_name}"
+        }
+    }
+    stdout {
+            codec => rubydebug
+    }
+}
+```
+
+- 配置文件使用`ruby`语言进行逻辑处理。
+- 通过对不同格式的日志信息解析，将数据导入`elasticsearch`。
+- 用3个索引分别存储了以上三种格式的日志：`log`，`ip`，`visit`。
+
+现在访问`Kibana`界面，并`Create index pattern`，可以在`Discover`中看到数据关于日期的分布。
+
+1. `log`![](./docs/images/dis-log.png)
+2. `ip`![](./docs/images/dis-ip.png)
+3. `visit`![](./docs/images/dis-visit.png)
+
+##### 数据可视化
+
+用`Kibana`的`Dashboard`进行数据可视化，虽然无法短时间获取大量数据，但我会尽量描述清楚它们的作用。
+
+1. **监测错误日志**
+   - 横轴：时间戳，纵轴：日志记录（过滤掉**不是错误**的日志记录）
+   - 作用：方便开发人员观测错误日志数的走向和趋势、及时排查问题。
+
+![](./docs/images/log-error.png)
+
+2. **错误日志数**
+
+   - 和上一项搭配，统计过去24小时产生的错误日志。
+   - 作用：直观清晰地反映是否有错误待排查。
+
+   ![](./docs/images/log-metric.png)
+
+3. **访问来源前10名**
+
+   - 作用：了解用户受众、根据用户偏好改进内容、区域的市场扩展
+
+   ![](./docs/images/ip-top10.png)
 
 #### 数据库可视化
 
