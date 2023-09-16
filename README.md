@@ -1,6 +1,6 @@
 # 基于ELK框架的静态/动态数据可视化系统
 
-本项目所展示的可视化图表均已**额外**保存于`ELKDATA/docs/dashboard`目录下。
+本项目所展示的可视化图表均已**额外**保存于`ELKDATA/docs/dashboard/`目录下。
 
 ## ELK介绍
 
@@ -37,7 +37,7 @@ Kibana是一个针对Elasticsearch的开源分析及可视化平台，用来搜�
 - 复杂性：共有**1w**行数据。![](./docs/images/datasource1.png)
 - 多样性：每行数据包含18个字段。![](./docs/images/data2.png)
 
-（数据源文件在项目`ELKDATA/data/statistic`目录下）
+（数据源文件在项目`ELKDATA/data/static`目录下）
 
 #### 数据介绍
 
@@ -278,22 +278,34 @@ output {
 
 1. **监测错误日志**
    - 横轴：时间戳，纵轴：日志记录（过滤掉**不是错误**的日志记录）
-   - 作用：方便开发人员观测错误日志数的走向和趋势、及时排查问题。
-
-![](./docs/images/log-error.png)
+   - 作用：方便开发人员观测错误日志数的走向和趋势、及时排查问题。![](./docs/images/log-error.png)
 
 2. **错误日志数**
 
    - 和上一项搭配，统计过去24小时产生的错误日志。
-   - 作用：直观清晰地反映是否有错误待排查。
-
-   ![](./docs/images/log-metric.png)
+   - 作用：直观清晰地反映是否有错误待排查。![](docs/images/log-metric.png)
 
 3. **访问来源前10名**
+   - 作用：了解用户受众、根据用户偏好改进内容、区域的市场扩展![](./docs/images/ip-top10.png)
 
-   - 作用：了解用户受众、根据用户偏好改进内容、区域的市场扩展
+4. **请求响应状态码**
+   - 绿色表示200，黄色表示304，红色表示404。
+   - 作用：分析请求响应情况。
+   - 这里只模拟了三种状态码，实际场景会有更多（400，500等等）![](./docs/images/status-code.png)
+5.  **请求路径统计**
+   - 用不同颜色表示不同请求路径（接口）。
+   - 作用：分析不同接口的调用情况，有利于合理分配服务器资源。
+   - 这里接口之间存在相互调用的关系，业务场景中效果更明显，仅做一个参考。![](./docs/images/path.png)
+6. **请求响应时间**
+   - 作用：监测响应时间，及时优化响应较慢的接口。
+   - 对**秒**级别的进行计数![](./docs/images/level-s.png)
+   - 对**毫秒**级别中，高于500ms的进行计数![](./docs/images/level-ms.png)
+7. **访问来源热力图**
+   - 作用：直观分析受众分布和热点地区![](./docs/images/heat-map.png)
 
-   ![](./docs/images/ip-top10.png)
+- 用一个`Dashboard`汇集所有图表，给每个图表设置了`Customize time range`，用于区分时间范围。
+
+![](./docs/images/dynamic-dashboard.png)
 
 #### 数据库可视化
 
