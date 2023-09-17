@@ -2,7 +2,7 @@
 
 本项目源码地址：https://github.com/withoutabc/ELKDATA
 
-本项目所展示的可视化图表均已**单独**保存于`ELKDATA/docs/dashboard/`目录下。
+本项目所展示的**可视化图表**均已单独保存于`ELKDATA/docs/dashboard/`目录下。
 
 ## ELK介绍
 
@@ -156,19 +156,19 @@ networks:
 
 1. `level`+`msg`+`time`：记录请求过程中产生的错误信息（msg格式不固定，可能是任何信息）。
 
-   ```log
+   ```json
    {"level":"error","msg":"请求失败:Get \"http://ip-api.com/json/125.86.165.54?fields=61439\u0026lang=zh-CN\": read tcp 192.168.128.2:40052-\u003e208.95.112.1:80: read: connection timed out","time":"2023-09-12T18:41:40+08:00"}
    ```
 
 2. `level`+`msg`+`time`，`msg`含有`country`+`region`+`city`+`latitude`+`longitude`：记录客户端地址。
 
-   ```log
+   ```json
    {"level":"info","msg":"country:中国,region:河南,city:郑州市,latitude:34.747200,longitude:113.625000","time":"2023-09-15T22:13:27+08:00"}
    ```
 
 3. `timestamp`+`status_code`+`client_ip`+`latency`+`method`+`path`：记录请求信息和响应结果。
 
-   ```log
+   ```json
    timestamp:2023-09-12 18:24:06,status_code:200,client_ip:125.86.165.54,latency:5.672637623s,method:GET,path:/ip
    timestamp:2023-09-12 18:24:14,status_code:200,client_ip:125.86.165.54,latency:351.117µs,method:GET,path:/visit
    ```
@@ -187,7 +187,6 @@ networks:
     volumes:
       - "./logstash.conf:/usr/share/logstash/pipeline/logstash.conf"
       - "./elk_data/log/:/home/withoutabc/elk/elk_data/log/"
-      - "./jdbc_driver/mysql-connector-java-8.0.26.jar:/jdbc_driver/mysql-connector-java-8.0.26.jar"
     environment:
       - "XPACK_MONITORING_ENABLED=false"
       - TZ=Asia/Shanghai
