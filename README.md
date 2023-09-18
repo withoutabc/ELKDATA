@@ -144,15 +144,15 @@ networks:
 |  `/ip`   |      获取登录主机的地址       | 有时请求信息速度较慢，请耐心等待 |
 | `/slow`  | 模拟耗时较长的业务，睡500毫秒 |  点击`/visit`界面的按钮即可访问  |
 
-我已用Docker将代码打包成镜像部署在服务器上，评委若感兴趣可以访问：http://49.7.114.49:5888/visit 
+我已用Docker将代码打包成镜像部署在服务器上：http://49.7.114.49:5888/visit
 
-您的访问**将会以日志形式记录，并被ELK框架读取分析**。
+访问来源的地址信息将会**以日志形式记录，并实时被ELK框架读取分析**。
 
 换句话说，**这里的数据来自对接口的访问**。
 
 #### 数据介绍
 
-一共有三类日志格式：
+一共有三类有效日志格式：
 
 1. `level`+`msg`+`time`：记录请求过程中产生的错误信息（msg格式不固定，可能是任何信息）。
 
@@ -201,80 +201,94 @@ networks:
 ```ruby
 # logstash.conf
 input {
+  # 读取输出日志路径的文件，*.log用于匹配该目录下所有log为后缀的文件
   file {
     path => "/home/withoutabc/elk/elk_data/log/*.log"
-    start_position => "beginning"
-    sincedb_path => "/dev/null"
-    tags => ["file"]
+    start_position => "beginning" 
+    sincedb_path => "/dev/null" # 每次都从头开始读取
+    tags => ["file"] # 加上tag，提示这是文件输出的内容
   }
 }
 
 filter {
+  # 按照规则解析含有“client_ip”的字段，%{...}是用来匹配的字段
   if "client_ip" in [message] {
     grok {
       match => { "message" => "timestamp:%{TIMESTAMP_ISO8601:timestamp},status_code:%{NUMBER:status_code},client_ip:%{IP:client_ip},latency:%{NUMBER:latency_value}%{DATA:latency_unit},method:%{WORD:method},path:%{URIPATH:url_path}" }
     }
+    # 规定时间戳格式  
     date {
         match => [ "timestamp", "yyyy-MM-dd HH:mm:ss" ]
         target => "@timestamp"
     }
+    # 添加索引名，便于将这类信息存储在对应索引
     mutate {
       add_field => {
         "index_name" => "visit"
       }
     }
-  } else if "country" in [message] {
+  } else if "country" in [message] { 
+    # 按照规则解析含有“country”的字段，%{...}是用来匹配的字段
     grok {
     match => { "message" => "{\"level\":\"%{WORD:level}\",\"msg\":\"country:%{DATA:country},region:%{DATA:region},city:%{DATA:city},latitude:%{NUMBER:latitude},longitude:%{NUMBER:longitude}\",\"time\":\"%{TIMESTAMP_ISO8601:timestamp}\"}" }
 
     }
+    # 规定时间戳格式
     date {
         match => [ "timestamp", "yyyy-MM-dd'T'HH:mm:ssZ" ]
         target => "@timestamp"
     }
+    # 添加索引名，便于将这类信息存储在对应索引
     mutate {
       add_field => {
         "index_name" => "ip"
       }
     }
+    # 经纬度转换成浮点数类型
     mutate {
     convert => {
       "latitude" => "float"
       "longitude" => "float"
     }
   }
-
+    # 添加location字段，用一对经纬度表示位置信息
     mutate {
     add_field => {
       "location" => "%{[latitude]},%{[longitude]}"
     }
   }
   } else if "level" in [message] and "country" not in [message] {
+    # 按照规则解析含有“message”的字段，%{...}是用来匹配的字段
     grok {
         match => { "message" => "{\"level\":\"%{WORD:level}\",\"msg\":\"%{GREEDYDATA:msg}\",\"time\":\"%{TIMESTAMP_ISO8601:timestamp}\"}" }
 
         }
+        # 规定时间戳格式
         date {
             match => [ "timestamp", "yyyy-MM-dd'T'HH:mm:ssZ" ]
             target => "@timestamp"
         }
+        # 添加索引名，便于将这类信息存储在对应索引
         mutate {
           add_field => {
             "index_name" => "log"
           }
         }
   } else {
+    # 其他日志自动丢弃
     drop {}
   }
 }
 
 output {
+    # 转发到对应地址的elasticsearch
     if "file" in [tags] {
       elasticsearch {
           hosts => ["elasticsearch:9200"]
           index => "%{index_name}"
         }
     }
+    # 终端输出匹配信息
     stdout {
             codec => rubydebug
     }
@@ -312,7 +326,7 @@ output {
    - 作用：分析请求响应情况。
    - 这里只模拟了三种状态码，实际场景会有更多（400，500等等）![](./docs/dashboard/dynamic/status-code.png)
 5.  **请求路径统计**
-   - 用不同颜色表示不同请求路径（接口）。
+   - 用不同颜色表示不同请求路径（**接口**）。
    - 作用：分析不同接口的调用情况，有利于合理分配服务器资源。
    - 这里接口之间存在相互调用的关系，业务场景中效果更明显，仅做一个参考。![](./docs/dashboard/dynamic/path.png)
 6. **请求响应时间**
@@ -326,13 +340,8 @@ output {
 
 ![](./docs/dashboard/dynamic/dynamic-dashboard.png)
 
-#### 总结
+- 以上信息和图表**都能够实时动态收集信息并绘图**，这是由`logstash`**实时收集信息**的特性决定的。
 
-以上信息和图表**都能够实时动态收集信息并绘图**，这是由`logstash`**实时收集信息**的特性决定的。若评委老师访问http://49.7.114.49:5888/visit 后想观测自己的访问记录是否被收集，可以打开 http://49.7.114.49:5601/app/dashboards#/view/a2381460-545d-11ee-a0a4-237297b5e6c4
-
-**如果不能正常打开请无视，部署不稳定**。
-
-用鼠标经过图像时会显示数据，或许这可以帮助您更好地确认日志是否实时记录。
 
 ## 结语
 
